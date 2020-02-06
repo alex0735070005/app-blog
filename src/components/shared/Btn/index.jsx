@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styles from "./styles.module.scss";
 
 const Btn = props => {
@@ -14,6 +15,15 @@ const Btn = props => {
       {types[type]}
     </button>
   );
+};
+
+Btn.defaultProps = {
+  type: "del"
+};
+
+Btn.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  type: PropTypes.string
 };
 
 export default Btn;

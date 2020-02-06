@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Item from "../Item";
 import styles from "./styles.module.scss";
 
@@ -15,6 +16,12 @@ const List = ({ posts, removePost, showEditForm }) => {
   });
 
   return <div className={styles.root}>{postsList}</div>;
+};
+
+List.propTypes = {
+  posts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  removePost: PropTypes.func.isRequired,
+  showEditForm: PropTypes.func.isRequired
 };
 
 export default List;

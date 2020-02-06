@@ -1,8 +1,7 @@
-/* eslint-disable import/prefer-default-export */
-import { POSTS_URL } from "config/api";
+import { POSTS_URL, API_KEY } from "config/api";
 
 export const fetchListPosts = () => {
-  const url = `${POSTS_URL}?api_key=6533156864bd641cf09188d9d71eae9a`;
+  const url = `${POSTS_URL}?api_key=${API_KEY}`;
   return fetch(url)
     .then(response => response.json())
     .then(data => {
@@ -14,16 +13,24 @@ export const fetchListPosts = () => {
 };
 
 export const fetchRemovePost = postId => {
-  const url = `${POSTS_URL}/${postId}?api_key=6533156864bd641cf09188d9d71eae9a`;
+  const url = `${POSTS_URL}/${postId}?api_key=${API_KEY}`;
   return fetch(url, {
     method: "DELETE"
   }).then(response => response.json());
 };
 
 export const fetchCreatePost = data => {
-  const url = `${POSTS_URL}?api_key=6533156864bd641cf09188d9d71eae9a`;
+  const url = `${POSTS_URL}?api_key=${API_KEY}`;
   return fetch(url, {
     method: "POST",
+    body: JSON.stringify(data)
+  }).then(response => response.json());
+};
+
+export const fetchEditPost = (data, postId) => {
+  const url = `${POSTS_URL}/${postId}?api_key=${API_KEY}`;
+  return fetch(url, {
+    method: "PUT",
     body: JSON.stringify(data)
   }).then(response => response.json());
 };

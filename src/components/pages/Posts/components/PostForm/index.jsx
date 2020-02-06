@@ -1,11 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Btn from "components/shared/Btn";
 import styles from "./styles.module.scss";
 
 const PostForm = props => {
   const { isShow, hide, onSubmitEdit, onSubmitCreate, post } = props;
-
-  console.log(post);
 
   if (!isShow) {
     return null;
@@ -14,10 +13,10 @@ const PostForm = props => {
   const {
     id,
     title,
-    short_description,
-    full_description,
+    short_description: shortDescription,
+    full_description: fullDescription,
     status,
-    seo_url
+    seo_url: seoUrl
   } = post;
 
   const onSubmit = id ? onSubmitEdit : onSubmitCreate;
@@ -37,7 +36,7 @@ const PostForm = props => {
         />
 
         <input
-          defaultValue={seo_url}
+          defaultValue={seoUrl}
           name="seo_url"
           type="text"
           placeholder="Seo url"
@@ -54,24 +53,39 @@ const PostForm = props => {
         </label>
 
         <input
-          defaultValue={short_description}
+          defaultValue={shortDescription}
           name="short_description"
           type="text"
           placeholder="Short description"
         />
 
         <textarea
-          defaultValue={full_description}
+          defaultValue={fullDescription}
           name="full_description"
           placeholder="Full description"
         />
 
         <button className={styles.create} type="submit">
-          Create post
+          {formText}
         </button>
       </form>
     </div>
   );
+};
+
+PostForm.propTypes = {
+  post: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    status: PropTypes.bool.isRequired,
+    seo_url: PropTypes.string.isRequired,
+    short_description: PropTypes.string.isRequired,
+    full_description: PropTypes.string.isRequired
+  }).isRequired,
+  isShow: PropTypes.bool.isRequired,
+  hide: PropTypes.func.isRequired,
+  onSubmitEdit: PropTypes.func.isRequired,
+  onSubmitCreate: PropTypes.func.isRequired
 };
 
 export default PostForm;

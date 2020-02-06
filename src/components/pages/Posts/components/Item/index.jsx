@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import Btn from "components/shared/Btn";
 import styles from "./styles.module.scss";
 
-const Item = ({ post, removePost, showEditForm }) => {
+const Item = props => {
+  const { post, removePost, showEditForm } = props;
   const {
     id,
     title,
@@ -29,10 +30,13 @@ const Item = ({ post, removePost, showEditForm }) => {
 
 Item.propTypes = {
   post: PropTypes.shape({
-    title: PropTypes.string,
-    date_update: PropTypes.object,
-    short_description: PropTypes.string
-  }).isRequired
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    date_update: PropTypes.object.isRequired,
+    short_description: PropTypes.string.isRequired
+  }).isRequired,
+  removePost: PropTypes.func.isRequired,
+  showEditForm: PropTypes.func.isRequired
 };
 
 export default Item;

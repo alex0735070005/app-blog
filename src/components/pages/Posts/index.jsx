@@ -6,6 +6,7 @@ import {
   fetchCreatePost,
   fetchListPosts,
   fetchRemovePost,
+  fetchEditPost,
   initialPost
 } from "./helpers";
 
@@ -28,6 +29,7 @@ const Posts = () => {
 
   useEffect(() => {
     updatePosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const showForm = () =>
@@ -77,7 +79,7 @@ const Posts = () => {
       seo_url: e.target.seo_url.value
     };
 
-    fetchCreatePost(dataSend).then(() => {
+    fetchEditPost(dataSend, state.post.id).then(() => {
       updatePosts();
     });
   };
