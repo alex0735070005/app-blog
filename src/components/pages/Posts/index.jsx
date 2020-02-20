@@ -21,14 +21,13 @@ const Posts = props => {
 
   const removePost = () => null;
   const showEditForm = () => null;
-  const showForm = () => null;
   const editPost = () => null;
   const createPost = () => null;
   const hideForm = () => null;
 
   return (
     <>
-      <Nav showForm={showForm} />
+      <Nav />
       <List posts={posts} removePost={removePost} showEditForm={showEditForm} />
       <PostForm
         post={post}
@@ -44,8 +43,7 @@ const Posts = props => {
 const mapStateToProps = state => {
   return {
     post: state.posts.post,
-    posts: state.posts.dataPosts,
-    isShowForm: state.posts.isShowForm
+    posts: state.posts.dataPosts
   };
 };
 

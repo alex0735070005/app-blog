@@ -4,7 +4,7 @@ import Btn from "components/shared/Btn";
 import styles from "./styles.module.scss";
 
 const Item = props => {
-  const { post, removePost, showEditForm } = props;
+  const { post, removePost, editPost } = props;
   const {
     id,
     title,
@@ -14,7 +14,7 @@ const Item = props => {
 
   const dateValue = new Date(date).toLocaleDateString();
   const remove = () => removePost(id);
-  const edit = () => showEditForm(post);
+  const edit = () => editPost(post);
 
   return (
     <div className={styles.root}>
@@ -36,7 +36,7 @@ Item.propTypes = {
     short_description: PropTypes.string.isRequired
   }).isRequired,
   removePost: PropTypes.func.isRequired,
-  showEditForm: PropTypes.func.isRequired
+  editPost: PropTypes.func.isRequired
 };
 
 export default Item;

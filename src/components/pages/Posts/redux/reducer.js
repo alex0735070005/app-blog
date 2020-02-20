@@ -12,6 +12,8 @@ const initialState = {
 };
 
 export const SET_POSTS = "SET_POSTS";
+export const EDIT_POST = "EDIT_POST";
+export const TOGGLE_FORM = "TOGGLE_FORM";
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -19,6 +21,23 @@ export default (state = initialState, action) => {
       return {
         ...state,
         dataPosts: action.payload.posts
+      };
+    }
+
+    case TOGGLE_FORM: {
+      const post = action.payload.clear ? initialState.post : state.post;
+      return {
+        ...state,
+        isShowForm: action.payload.status,
+        post
+      };
+    }
+
+    case EDIT_POST: {
+      return {
+        ...state,
+        post: action.payload.post,
+        isShowForm: true
       };
     }
 

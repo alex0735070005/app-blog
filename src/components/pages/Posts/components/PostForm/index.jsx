@@ -1,14 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import Btn from "components/shared/Btn";
+import { toggleFormAction } from "../../redux/actionTypes";
+import { fetchCreatePostAction } from "../../redux/actions";
+
 import styles from "./styles.module.scss";
 
 const PostForm = props => {
-  const { isShow, hide, onSubmitEdit, onSubmitCreate, post } = props;
+  const { isShowForm, closeForm, editPost, createPost, post } = props;
 
-  if (!isShow) {
+  if (!isShowForm) {
     return null;
   }
+
+  const onSubmitEdit = e => {
+    e.preventDefault();
+    editPost(e.target);
+  };
+
+  const onSubmitCreate = e => {
+    e.preventDefault();
+    createPost(e.target);
+  };
 
   const {
     id,
@@ -26,7 +40,7 @@ const PostForm = props => {
     <div className={styles.wrap}>
       <form onSubmit={onSubmit} className={styles.root}>
         <h4>{formText}</h4>
-        <Btn type="del" onClick={hide} />
+        <Btn type="del" onClick={closeForm} />
 
         <input
           defaultValue={title}
@@ -82,10 +96,23 @@ PostForm.propTypes = {
     short_description: PropTypes.string.isRequired,
     full_description: PropTypes.string.isRequired
   }).isRequired,
-  isShow: PropTypes.bool.isRequired,
-  hide: PropTypes.func.isRequired,
-  onSubmitEdit: PropTypes.func.isRequired,
-  onSubmitCreate: PropTypes.func.isRequired
+  isShowForm: PropTypes.bool.isRequired,
+  closeForm: PropTypes.func.isRequired,
+  editPost: PropTypes.func.isRequired,
+  createPost: PropTypes.func.isRequired
 };
 
-export default PostForm;
+const mapStateToProps = state => {
+  return {
+    isShowForm: state.posts.isShowForm
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    closeForm: () => dispatch(toggleFormAction(false, true)),
+    createPost: data => fetchCreatePostAction(data, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostForm);

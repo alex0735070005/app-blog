@@ -1,13 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+import { toggleFormAction } from "../../redux/actionTypes";
+
 import styles from "./styles.module.scss";
 
 const Nav = props => {
-  const { showForm } = props;
+  const { toggleForm } = props;
   return (
     <div className={styles.root}>
       <h1>Posts</h1>
-      <button onClick={showForm} type="button">
+      <button onClick={toggleForm} type="button">
         Add post
       </button>
     </div>
@@ -15,7 +19,11 @@ const Nav = props => {
 };
 
 Nav.propTypes = {
-  showForm: PropTypes.func.isRequired
+  toggleForm: PropTypes.func.isRequired
 };
 
-export default Nav;
+const mapDispatchToProps = dispatch => ({
+  toggleForm: () => dispatch(toggleFormAction(true))
+});
+
+export default connect(null, mapDispatchToProps)(Nav);

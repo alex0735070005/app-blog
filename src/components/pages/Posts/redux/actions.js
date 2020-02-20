@@ -1,6 +1,6 @@
 import { POSTS_URL, API_KEY } from "config/api";
 import { setPostsAction } from "./actionTypes";
-import dataPost from "./data.json";
+import mockPosts from "./data.json";
 
 export const fetchListPostsAction = dispatch => {
   const url = `${POSTS_URL}?api_key=${API_KEY}`;
@@ -11,6 +11,9 @@ export const fetchListPostsAction = dispatch => {
         dispatch(setPostsAction([]));
       }
       dispatch(setPostsAction(data.posts));
+    })
+    .catch(() => {
+      dispatch(setPostsAction(mockPosts.posts));
     });
 };
 
@@ -21,12 +24,31 @@ export const fetchRemovePostAction = postId => {
   }).then(response => response.json());
 };
 
-export const fetchCreatePostAction = data => {
+export const fetchCreatePostAction = (data, dispatch) => {
   const url = `${POSTS_URL}?api_key=${API_KEY}`;
-  return fetch(url, {
+
+  const dataQuery = {
+    title: data.title.value,
+    short_description: data.short_description.value,
+    full_description: data.full_description.value,
+    status: data.status.checked,
+    seo_url: data.seo_url.value
+  };
+
+  fetch(url, {
     method: "POST",
-    body: JSON.stringify(data)
-  }).then(response => response.json());
+    body: JSON.stringify(dataQuery)
+  })
+    .then(response => response.json())
+    .then(dataResp => {
+      if (dataResp.result) {
+        fetchListPostsAction(dispatch);
+      }
+    })
+    .catch(() => {
+      alert("post created");
+      fetchListPostsAction(dispatch);
+    });
 };
 
 export const fetchEditPostAction = (data, postId) => {

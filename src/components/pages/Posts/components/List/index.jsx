@@ -1,15 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { editPostAction } from "../../redux/actionTypes";
 import Item from "../Item";
 import styles from "./styles.module.scss";
 
-const List = ({ posts, removePost, showEditForm }) => {
+const List = ({ posts, removePost, editPost }) => {
   const postsList = posts.map(post => {
     return (
       <Item
         key={post.id}
         post={post}
-        showEditForm={showEditForm}
+        editPost={editPost}
         removePost={removePost}
       />
     );
@@ -21,7 +23,11 @@ const List = ({ posts, removePost, showEditForm }) => {
 List.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
   removePost: PropTypes.func.isRequired,
-  showEditForm: PropTypes.func.isRequired
+  editPost: PropTypes.func.isRequired
 };
 
-export default List;
+const mapDispatchToProps = dispatch => ({
+  editPost: post => dispatch(editPostAction(post))
+});
+
+export default connect(null, mapDispatchToProps)(List);
