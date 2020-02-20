@@ -1,5 +1,6 @@
 import { POSTS_URL, API_KEY } from "config/api";
 import { setPostsAction } from "./actionTypes";
+import dataPost from "./data.json";
 
 export const fetchListPostsAction = dispatch => {
   const url = `${POSTS_URL}?api_key=${API_KEY}`;
